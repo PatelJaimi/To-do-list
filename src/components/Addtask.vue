@@ -65,6 +65,7 @@ export default {
         console.log(data);
       });
       alert("Task Added")
+      this.$router.push('/')
       event.preventDefault();
     },
   },

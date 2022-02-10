@@ -90,6 +90,7 @@ export default {
         console.log(data);
       });
       alert("Task Updated");
+      this.$router.push('/')
       event.preventDefault();
     },
   },
