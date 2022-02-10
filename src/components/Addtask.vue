@@ -2,9 +2,11 @@
   <div>
     <div class="header">
       <h1>Add Task</h1>
-      <button id="show">Show Task</button>
+      <button>
+        <router-link to='/' id="show">Show task</router-link>
+      </button>
     </div>
-    <form action="#" method="post" v-on:submit="addtask()">
+    <form method="post" v-on:submit="addtask()">
       <label for="tname">Task Name</label>
       <input type="text" id="tname" v-model="task.name" required /><br />
       <label>Priority </label><br />
@@ -117,7 +119,10 @@ button {
 #show {
   background: #00ad1d;
   font-size: 18px;
-  padding: 10px 25px;
+  padding: 15px 25px;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
 }
 #show:hover {
   background: #007914;

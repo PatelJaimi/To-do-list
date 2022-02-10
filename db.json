@@ -1,37 +1,28 @@
 {
   "posts": [
     {
-      "id": 2,
-      "name": "call hr",
-      "priority": "High",
-      "status": "Undone"
-    },
-    {
-      "name": "tata jaimi",
+      "name": "Give gift",
       "priority": "Low",
-      "status": "Undone",
-      "id": 3
-    },
-    {
+      "status": "Done",
       "id": 1
     },
     {
+      "name": "Mail jaimi",
+      "priority": "Medium",
+      "status": "Done",
+      "id": 2
+    },
+    {
       "name": "message Dhruvi",
-      "priority": "High",
+      "priority": "Medium",
       "status": "Undone",
-      "id": 4
+      "id": 3
     },
     {
       "name": "Call mom",
       "priority": "High",
       "status": "Undone",
-      "id": 5
-    },
-    {
-      "name": "dhwani",
-      "priority": "Low",
-      "status": "Undone",
-      "id": 6
+      "id": 4
     }
   ],
   "comments": [],

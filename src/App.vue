@@ -1,16 +1,15 @@
 <template>
   <div id="app">
-    <Updatetask />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Updatetask from './components/Updatetask.vue'
 
 export default {
   name: 'App',
   components: {
-    Updatetask
+    
   }
 }
 </script>

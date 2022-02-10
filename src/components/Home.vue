@@ -2,7 +2,9 @@
   <div>
     <div class="header">
       <h1>To Do List</h1>
-      <button id="add">Add Task</button>
+      <button>
+        <router-link to="/Addtask" id="add">Add Task</router-link>
+      </button>
     </div>
     <table>
       <tr>
@@ -13,14 +15,29 @@
       </tr>
       <tr v-for="i in task" :key="i">
         <td>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            v-bind:value="i.status"
+            v-model="i.status"
+            v-bind:checked="false"
+            v-on:change="changetask(i.id,i.name,i.priority,i.status)"
+          />
         </td>
-        <td>{{ i.name }}</td>
-        <td>{{ i.priority }}</td>
-        <td>{{ i.status }}</td>
+        <td
+          style="text-align: left"
+          v-bind:class="{ undone: i.status == 'Done' }"
+        >
+          {{ i.name }}
+        </td>
+        <td>{{ i.priority }} {{ data }}</td>
+        <td>{{ i.status | chtext }}</td>
         <td>
           <button id="delete" v-on:click="deletetask(i.id)">Delete</button>
-          <button id="update">Update</button>
+          <button>
+            <router-link v-bind:to="Updatetaskid(i.id)" id="update"
+              >Edit</router-link
+            >
+          </button>
         </td>
       </tr>
     </table>
@@ -38,8 +55,17 @@ export default {
   name: "Home",
   data() {
     return {
+      data: "",
       task: [],
     };
+  },
+  beforeUpdate() {
+    for (let i = 0; i < this.task.length; i++) {
+      if (this.task[i].status == "Undone") {
+        this.task[i].status = false;
+        // console.log("hey")
+      }
+    }
   },
   created() {
     this.showdata();
@@ -59,6 +85,35 @@ export default {
         this.showdata();
       }
     },
+    Updatetaskid(id) {
+      return "/Updatetask/" + id;
+    },
+    changetask(uid,uname,upriority,ustatus) {
+      if(ustatus==true){
+        ustatus="Done"
+      }
+      if(ustatus==false){
+        ustatus="Undone"
+      }
+      const udata = {
+        name: uname,
+        priority: upriority,
+        status: ustatus,
+        id: uid,
+      };
+      this.axios
+        .put("http://localhost:3000/posts/" + uid, udata)
+        .then((data) => {
+          console.log(data);
+        });
+    },
+  },
+  updated() {
+    for (let i = 0; i < this.task.length; i++) {
+      if (this.task[i].status == true) {
+        this.task[i].status = "Done";
+      }
+    }
   },
 };
 </script>
@@ -86,9 +141,23 @@ th {
 }
 td,
 th {
-  padding: 20px 40px;
+  padding: 15px 40px;
 }
 button {
+  margin: 0px 2px;
+  border: none;
+  font-weight: bold;
+}
+#add {
+  background: #4677ff;
+  color: #fff;
+  font-size: 18px;
+  padding: 15px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+#delete {
+  background: #ff5959;
   padding: 5px 15px;
   margin: 0px 2px;
   border: none;
@@ -96,17 +165,15 @@ button {
   border-radius: 5px;
   font-weight: bold;
 }
-#add {
-  background: #4677ff;
-  font-size: 18px;
-  padding: 10px 25px;
-  border-radius: 5px;
-}
-#delete {
-  background: #ff5959;
-}
 #update {
   background: #00c220;
+  padding: 8px 15px;
+  margin: 0px 2px;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
 }
 #delete:hover {
   background: #cc0000;
@@ -116,5 +183,8 @@ button {
 }
 #add:hover {
   background: #0051d4;
+}
+.undone {
+  text-decoration: line-through;
 }
 </style>

@@ -2,7 +2,9 @@
   <div>
     <div class="header">
       <h1>Update Task</h1>
-      <button id="show">Show Task</button>
+      <button>
+        <router-link to='/' id="show">Show task</router-link>
+      </button>
     </div>
     <form action="#" method="post" v-on:submit="updatetask()">
       <label for="tname">Task Name</label>
@@ -33,6 +35,25 @@
           v-model="task.priority"
         />
         <label for="low">Low</label>
+      </div><br>
+      <label>Status </label><br />
+      <div class="radiobtn">
+        <input
+          type="radio"
+          name="status"
+          id="Undone"
+          value="Undone"
+          v-model="task.status"
+        />
+        <label for="Undone">Undone</label>
+        <input
+          type="radio"
+          name="status"
+          id="Done"
+          value="Done"
+          v-model="task.status"
+        />
+        <label for="Done">Done</label>
       </div>
       <button id="add" type="submit">Update Task</button>
     </form>
@@ -50,6 +71,7 @@ export default {
   name: "Updatetask",
   data() {
     return {
+      tid:this.$route.params.id,
       task: {
         name: "",
         priority: "Low",
@@ -58,16 +80,16 @@ export default {
     };
   },
   created() {
-    this.axios.get("http://localhost:3000/posts/3").then((data) => {
+    this.axios.get("http://localhost:3000/posts/"+this.tid).then((data) => {
       this.task = data.data;
     });
   },
   methods: {
     updatetask(event) {
-      this.axios.put("http://localhost:3000/posts/3", this.task).then((data) => {
+      this.axios.put("http://localhost:3000/posts/"+this.tid, this.task).then((data) => {
         console.log(data);
       });
-    //   alert("Task Added");
+      alert("Task Updated");
       event.preventDefault();
     },
   },
@@ -122,7 +144,10 @@ button {
 #show {
   background: #00ad1d;
   font-size: 18px;
-  padding: 10px 25px;
+  padding: 15px 25px;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
 }
 #show:hover {
   background: #007914;
